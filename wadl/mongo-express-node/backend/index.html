@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    
+    <style>
+        table{
+            margin: 10px;
+        }
+
+        td{
+            border: 2px solid black;
+            padding: 4px;
+        }
+
+        th{
+            background-color: rgb(61, 61, 140);
+            color: white;
+            padding: 4px;
+        }
+    </style>
+  </head>
+  <body>
+    
+    <h1>Add Student</h1>
+    <form id="studentForm">
+        <table>
+            <tr>
+                <td><label for="name">Name:</label></td>
+                <td><input type="text" id="Name" name="Name" required></td>
+            </tr>
+        
+            <tr>
+                <td><label for="rollNo">Roll No:</label></td>
+                <td><input type="text" id="Roll_No" name="Roll_No" required></td>
+            </tr>
+        
+            <tr>
+                <td><label for="wadMarks">WAD Marks:</label></td>
+                <td><input type="number" id="WAD_Marks" name="WAD_Marks" required></td>
+            </tr>
+        
+            <tr>
+                <td><label for="ccMarks">CC Marks:</label></td>
+                <td><input type="number" id="CC_Marks" name="CC_Marks" required></td>
+            </tr>
+        
+            <tr>
+                <td><label for="dsbdaMarks">DSBDA Marks:</label></td>
+                <td><input type="number" id="DSBDA_Marks" name="DSBDA_Marks" required></td>
+            </tr>
+        
+            <tr>
+                <td><label for="cnsMarks">CNS Marks:</label></td>
+                <td><input type="number" id="CNS_Marks" name="CNS_Marks" required></td>
+            </tr>
+        
+            <tr>
+                <td><label for="aiMarks">AI Marks:</label></td>
+                <td><input type="number" id="AI_marks" name="AI_marks" required></td>
+            </tr>
+        </table>
+        
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="responseMessage"></div>
+    
+    
+    
+    <button onclick="fetchData()">Fetch Data</button>
+
+    <button onCLick="dsbdagt25()">Get Names of STudents Having DSBDA marks greater than 25</button>
+    <div id="content">
+        
+    </div>
+
+    <script>
+      const content = document.getElementById("content");
+      async function fetchData() {
+        try {
+          const response = await fetch(`http://localhost:8000/allStudents`);
+          const data = await response.json();
+          console.log("data", data.data);
+          const table = document.createElement("table");
+
+
+          var tr = document.createElement("tr");
+
+          var sr = document.createElement('th')
+          sr.innerHTML = "SR. NO."
+          tr.appendChild(sr)
+            
+          var NAME_td = document.createElement("th");
+          NAME_td.textContent = "NAME";
+          tr.appendChild(NAME_td);
+
+          var ROLL_td = document.createElement("th");
+          ROLL_td.textContent = "ROLL";
+          tr.appendChild(ROLL_td);
+
+          var AI_marks_td = document.createElement("th");
+          AI_marks_td.textContent = "AI_marks";
+          tr.appendChild(AI_marks_td);
+
+          var CC_marks_td = document.createElement("th");
+          CC_marks_td.textContent = "CC_marks";
+          tr.appendChild(CC_marks_td);
+
+          var CNS_marks_td = document.createElement("th");
+          CNS_marks_td.textContent = "CNS_marks";
+          tr.appendChild(CNS_marks_td);
+
+          var DSBDA_marks_td = document.createElement("th");
+          DSBDA_marks_td.textContent = "DSBDA_marks";
+          tr.appendChild(DSBDA_marks_td);
+
+          var WAD_marks_td = document.createElement("th");
+          WAD_marks_td.textContent = "WAD_marks";
+          tr.appendChild(WAD_marks_td);
+
+          table.appendChild(tr)
+
+          data.data.map((item,index) => {
+            var tr = document.createElement('tr')
+
+            const ind = document.createElement('td')
+            ind.innerHTML = index
+            tr.appendChild(ind)
+
+            const NAME = document.createElement("td");
+            NAME.innerHTML = item.Name
+            tr.appendChild(NAME)
+
+            const ROLL_NO = document.createElement("td");
+            ROLL_NO.innerHTML = item.Roll_No
+            tr.appendChild(ROLL_NO)
+
+            const AI = document.createElement("td");
+            AI.innerHTML = item.AI_marks;
+            tr.appendChild(AI);
+
+            const CC = document.createElement("td");
+            CC.innerHTML = item.CC_Marks
+            tr.appendChild(CC)
+
+            const CNS = document.createElement("td");
+            CNS.innerHTML = item.CNS_Marks
+            tr.appendChild(CNS)
+
+            const DSBDA = document.createElement("td");
+            DSBDA.innerHTML = item.DSBDA_Marks
+            tr.appendChild(DSBDA)
+            
+            const WAD = document.createElement("td");
+            WAD.innerHTML = item.WAD_Marks
+            tr.appendChild(WAD)
+
+          
+            table.appendChild(tr);
+          }, content.appendChild(table));
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+
+      async function dsbdagt25(){
+        try {
+            const response = await fetch(`http://localhost:8000/allStudents/dsbdagreaterthan25/`);
+            const data = await response.json();
+            console.log(data.studentsWithMoreThan25MarksInDSBDA)
+
+            var table = document.createElement('table')
+            var tr = document.createElement('tr')
+            data.studentsWithMoreThan25MarksInDSBDA.map((item)=>{
+                var td = document.createElement('td');
+                td.innerHTML = item
+                tr.appendChild(td)
+            })
+            table.appendChild(tr)
+            content.appendChild(table)
+
+        } catch (err) {
+            console.error(err);
+            }
+        }
+
+
+      
+        document.getElementById('studentForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            console.log(this)
+            console.log(event.taget)
+            const formData = new FormData(this);
+            const formDataObject = {};
+            formData.forEach((value, key) => {
+               
+                formDataObject[key] = value;
+            });
+
+            try {
+                const response = await fetch('http://localhost:8000/allStudents', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formDataObject)
+                });
+
+                const responseData = await response.json();
+
+                if (response.ok) {
+                    document.getElementById('responseMessage').textContent = responseData.message;
+                } else {
+                    document.getElementById('responseMessage').textContent = 'Error: ' + responseData.message;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        setInterval(()=>{
+            content.innerHTML = ""
+        },5000)
+
+    </script>
+  </body>
+</html>

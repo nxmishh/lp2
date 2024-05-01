@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        td{
+            margin: 8px;
+            border: 2px solid red;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="fetchData()">fetch</button>
+    <div id="content"></div>
+
+    <script>
+        async function fetchData(){
+            const userRegistrationData = JSON.parse(localStorage.getItem('userRegistrationData')) || []
+
+            const table = document.createElement('table')
+
+            userRegistrationData.forEach((item)=>{
+            const tr = document.createElement('tr')
+            const  td1 = document.createElement('td')
+            td1.innerHTML = `<h3>${item.name}</h3>`
+            const  td2 = document.createElement('td')
+            td2.innerHTML = `<h3>${item.email}</h3>`
+            tr.appendChild(td1)
+            tr.appendChild(td2)
+            table.appendChild(tr)
+            })
+
+            const content = document.getElementById('content')
+            content.appendChild(table)
+        }
+    </script>
+</body>
+</html>
