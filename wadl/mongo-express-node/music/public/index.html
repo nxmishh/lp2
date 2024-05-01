@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Songs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        form {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 200px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Songs</h1>
+    <form action="/insert5">
+        <div style="display: flex; align-items: center;">
+            <label for="insert">To insert 5 songs:</label>
+            <button id="insert">Click Me!</button>
+        </div>
+    </form>
+
+    <form action="/totalcount">
+        <div style="display: flex; align-items: center;">
+            <label for="alldocs">All Docs:</label>
+            <button id="alldocs">Click Me!</button>
+        </div>
+    </form>
+
+    <form action="/musicd" method="post">
+        <label for="musicd">Music Director:</label>
+        <input type="text" name="musicd" id="musicd" placeholder="Enter music director">
+        <button>Click Me!</button>
+    </form>
+
+    <form action="/musicd/singer" method="post">
+        <label for="musicd">Music Director:</label>
+        <input type="text" name="musicd" id="musicd" placeholder="Enter music director">
+        <br>
+        <label for="singer">Singer:</label>
+        <input type="text" name="singer" id="singer" placeholder="Enter singer">
+        <button>Click Me!</button>
+    </form>
+
+    <form action="/delete?_method=DELETE" method="post">
+        <label for="songname">Song Name:</label>
+        <input type="text" name="songname" id="songname" placeholder="Enter song name">
+        <button>Click Me!</button>
+    </form>
+
+    <form action="/add">
+        <div style="display: flex; align-items: center;">
+            <label for="add">Add favorite song:</label>
+            <button id="add">Click Me!</button>
+        </div>
+    </form>
+
+    <form action="/singer/film" method="post">
+        <label for="film">Film:</label>
+        <input type="text" name="film" id="film" placeholder="Enter film">
+        <br>
+        <label for="singer">Singer:</label>
+        <input type="text" name="singer" id="singer" placeholder="Enter singer">
+        <button>Click Me!</button>
+    </form>
+
+    <form action="/update?_method=PUT" method="post">
+        <label for="song">Song:</label>
+        <input type="text" name="song" id="song" placeholder="Enter song">
+        <br>
+        <label for="actor">Actor:</label>
+        <input type="text" name="actor" id="actor" placeholder="Enter actor">
+        <br>
+        <label for="actress">Actress:</label>
+        <input type="text" name="actress" id="actress" placeholder="Enter actress">
+        <button>Click Me!</button>
+    </form>
+
+    <form action="/display">
+        <label for="database">View Database:</label>
+        <button>Click Me!</button>
+    </form>
+</body>
+</body>
+</body>
+</html>
+
