@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config(); // Load environment variables from .env file
+require('dotenv').config();
 const studentRoutes = require('./StudentRoutes');
 
 const app = express();
@@ -15,7 +15,6 @@ mongoose.connect(process.env.MONGO_URI)
     .catch((err) => {
         console.log(`Error while connecting to DB: ${err}`);
   });
-
 
 app.use('/allStudents', studentRoutes);
 
